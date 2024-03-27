@@ -1,0 +1,545 @@
+        -:    0:Source:ut.cpp
+        -:    0:Graph:ut.gcno
+        -:    0:Data:-
+        -:    0:Runs:0
+        -:    0:Source is newer than graph
+        -:    1:#include "fms.h"
+        -:    2:#include <gtest/gtest.h>
+        -:    3:
+        -:    4:// 測試 FMS 函式的行為
+    #####:    5:TEST(FMSTest, BasicInput) {
+    #####:    6:  char s[] = "rate R2D2 2 time 55566 23 12 #";
+    #####:    7:  char expOutput[] = "rate - identifier\nR2D2 - identifier\n2 - number\ntime - "
+        -:    8:                     "identifier\n55566 - number\n23 - number\n12 - number\n";
+    #####:    9:  ASSERT_STREQ(expOutput, FMS(s));
+        -:   10:}
+------------------
+_ZN23FMSTest_BasicInput_TestC2Ev:
+function _ZN23FMSTest_BasicInput_TestC2Ev called 0 returned 0% blocks executed 0%
+    #####:    5:TEST(FMSTest, BasicInput) {
+call    0 never executed
+------------------
+_ZN23FMSTest_BasicInput_TestD0Ev:
+function _ZN23FMSTest_BasicInput_TestD0Ev called 0 returned 0% blocks executed 0%
+    #####:    5:TEST(FMSTest, BasicInput) {
+call    0 never executed
+call    1 never executed
+------------------
+_ZN23FMSTest_BasicInput_TestD2Ev:
+function _ZN23FMSTest_BasicInput_TestD2Ev called 0 returned 0% blocks executed 0%
+    #####:    5:TEST(FMSTest, BasicInput) {
+call    0 never executed
+------------------
+_ZN23FMSTest_BasicInput_Test8TestBodyEv:
+function _ZN23FMSTest_BasicInput_Test8TestBodyEv called 0 returned 0% blocks executed 0%
+    #####:    5:TEST(FMSTest, BasicInput) {
+    #####:    6:  char s[] = "rate R2D2 2 time 55566 23 12 #";
+    #####:    7:  char expOutput[] = "rate - identifier\nR2D2 - identifier\n2 - number\ntime - "
+        -:    8:                     "identifier\n55566 - number\n23 - number\n12 - number\n";
+    #####:    9:  ASSERT_STREQ(expOutput, FMS(s));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+        -:   10:}
+------------------
+        -:   11:
+    #####:   12:TEST(FMTEST, UUU) {
+    #####:   13:  char s[] = "";
+    #####:   14:  char expOutput[] = "";
+    #####:   15:  ASSERT_STREQ(expOutput, FMS(s));
+        -:   16:}
+------------------
+_ZN23FMSTest_EmptyInput_TestC2Ev:
+function _ZN23FMSTest_EmptyInput_TestC2Ev called 0 returned 0% blocks executed 0%
+    #####:   12:TEST(FMTEST, UUU) {
+call    0 never executed
+------------------
+_ZN23FMSTest_EmptyInput_TestD0Ev:
+function _ZN23FMSTest_EmptyInput_TestD0Ev called 0 returned 0% blocks executed 0%
+    #####:   12:TEST(FMTEST, UUU) {
+call    0 never executed
+call    1 never executed
+------------------
+_ZN23FMSTest_EmptyInput_TestD2Ev:
+function _ZN23FMSTest_EmptyInput_TestD2Ev called 0 returned 0% blocks executed 0%
+    #####:   12:TEST(FMTEST, UUU) {
+call    0 never executed
+------------------
+_ZN23FMSTest_EmptyInput_Test8TestBodyEv:
+function _ZN23FMSTest_EmptyInput_Test8TestBodyEv called 0 returned 0% blocks executed 0%
+    #####:   12:TEST(FMTEST, UUU) {
+    #####:   13:  char s[] = "";
+    #####:   14:  char expOutput[] = "";
+    #####:   15:  ASSERT_STREQ(expOutput, FMS(s));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+        -:   16:}
+------------------
+        -:   17:
+    #####:   18:TEST(FMSETEST, UUEU) { ASSERT_STREQ("123", "123"); }
+    #####:   19:
+    #####:   20:TEST(FMSTST, UUjU) {
+    #####:   21:  char s[] = "123 -+ 34 U";
+        -:   22:  char expOutput[] = "123 - number\n-";
+------------------
+_ZN23FMSTest_OnlySpaces_TestC2Ev:
+function _ZN23FMSTest_OnlySpaces_TestC2Ev called 0 returned 0% blocks executed 0%
+    #####:   18:TEST(FMSETEST, UUEU) { ASSERT_STREQ("123", "123"); }
+call    0 never executed
+------------------
+_ZN23FMSTest_OnlySpaces_TestD0Ev:
+function _ZN23FMSTest_OnlySpaces_TestD0Ev called 0 returned 0% blocks executed 0%
+    #####:   18:TEST(FMSETEST, UUEU) { ASSERT_STREQ("123", "123"); }
+call    0 never executed
+call    1 never executed
+------------------
+_ZN23FMSTest_OnlySpaces_TestD2Ev:
+function _ZN23FMSTest_OnlySpaces_TestD2Ev called 0 returned 0% blocks executed 0%
+    #####:   18:TEST(FMSETEST, UUEU) { ASSERT_STREQ("123", "123"); }
+call    0 never executed
+------------------
+_ZN23FMSTest_OnlySpaces_Test8TestBodyEv:
+function _ZN23FMSTest_OnlySpaces_Test8TestBodyEv called 0 returned 0% blocks executed 0%
+    #####:   18:TEST(FMSETEST, UUEU) { ASSERT_STREQ("123", "123"); }
+    #####:   19:
+    #####:   20:TEST(FMSTST, UUjU) {
+    #####:   21:  char s[] = "123 -+ 34 U";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+        -:   22:  char expOutput[] = "123 - number\n-";
+------------------
+        -:   23:  ASSERT_STREQ(expOutput, FMS(s));
+    #####:   24:}
+    #####:   25:
+    #####:   26:TEST(FMSTest, Identifier) {
+    #####:   27:  char s[] = "abc def";
+        -:   28:  char expOutput[] = "abc - identifier\ndef";
+------------------
+_ZN24FMSTest_OnlyNumbers_TestC2Ev:
+function _ZN24FMSTest_OnlyNumbers_TestC2Ev called 0 returned 0% blocks executed 0%
+    #####:   24:}
+call    0 never executed
+------------------
+_ZN24FMSTest_OnlyNumbers_TestD0Ev:
+function _ZN24FMSTest_OnlyNumbers_TestD0Ev called 0 returned 0% blocks executed 0%
+    #####:   24:}
+call    0 never executed
+call    1 never executed
+------------------
+_ZN24FMSTest_OnlyNumbers_TestD2Ev:
+function _ZN24FMSTest_OnlyNumbers_TestD2Ev called 0 returned 0% blocks executed 0%
+    #####:   24:}
+call    0 never executed
+------------------
+_ZN24FMSTest_OnlyNumbers_Test8TestBodyEv:
+function _ZN24FMSTest_OnlyNumbers_Test8TestBodyEv called 0 returned 0% blocks executed 0%
+    #####:   24:}
+    #####:   25:
+    #####:   26:TEST(FMSTest, Identifier) {
+    #####:   27:  char s[] = "abc def";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+        -:   28:  char expOutput[] = "abc - identifier\ndef";
+------------------
+        -:   29:  ASSERT_STREQ(expOutput, FMS(s));
+    #####:   30:}
+        -:   31:
+    #####:   32:TEST(FMSTest, Number) {
+    #####:   33:  char s[] = "123 456";
+        -:   34:  char expOutput[] = "123 - number\n456";
+    #####:   35:  ASSERT_STREQ(expOutput, FMS(s));
+    #####:   36:}
+    #####:   37:
+        -:   38:TEST(FMSTest, MixedInput) {
+------------------
+_ZN22FMSTest_LongInput_TestC2Ev:
+function _ZN22FMSTest_LongInput_TestC2Ev called 0 returned 0% blocks executed 0%
+    #####:   30:}
+call    0 never executed
+------------------
+_ZN22FMSTest_LongInput_TestD0Ev:
+function _ZN22FMSTest_LongInput_TestD0Ev called 0 returned 0% blocks executed 0%
+    #####:   30:}
+call    0 never executed
+call    1 never executed
+------------------
+_ZN22FMSTest_LongInput_TestD2Ev:
+function _ZN22FMSTest_LongInput_TestD2Ev called 0 returned 0% blocks executed 0%
+    #####:   30:}
+call    0 never executed
+------------------
+_ZN22FMSTest_LongInput_Test8TestBodyEv:
+function _ZN22FMSTest_LongInput_Test8TestBodyEv called 0 returned 0% blocks executed 0%
+    #####:   30:}
+        -:   31:
+    #####:   32:TEST(FMSTest, Number) {
+branch  0 never executed
+branch  1 never executed
+    #####:   33:  char s[] = "123 456";
+        -:   34:  char expOutput[] = "123 - number\n456";
+    #####:   35:  ASSERT_STREQ(expOutput, FMS(s));
+    #####:   36:}
+    #####:   37:
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+        -:   38:TEST(FMSTest, MixedInput) {
+------------------
+        -:   39:  char s[] = "abc 123 def";
+    #####:   40:  char expOutput[] = "abc - identifier\n123 - number\ndef";
+    #####:   41:  ASSERT_STREQ(expOutput, FMS(s));
+    #####:   42:}
+    #####:   43:
+        -:   44:TEST(FMSTest, NoOutput) {
+------------------
+_ZN25FMSTest_InvalidInput_TestC2Ev:
+function _ZN25FMSTest_InvalidInput_TestC2Ev called 0 returned 0% blocks executed 0%
+    #####:   40:  char expOutput[] = "abc - identifier\n123 - number\ndef";
+call    0 never executed
+------------------
+_ZN25FMSTest_InvalidInput_TestD0Ev:
+function _ZN25FMSTest_InvalidInput_TestD0Ev called 0 returned 0% blocks executed 0%
+    #####:   40:  char expOutput[] = "abc - identifier\n123 - number\ndef";
+call    0 never executed
+call    1 never executed
+------------------
+_ZN25FMSTest_InvalidInput_TestD2Ev:
+function _ZN25FMSTest_InvalidInput_TestD2Ev called 0 returned 0% blocks executed 0%
+    #####:   40:  char expOutput[] = "abc - identifier\n123 - number\ndef";
+call    0 never executed
+------------------
+_ZN25FMSTest_InvalidInput_Test8TestBodyEv:
+function _ZN25FMSTest_InvalidInput_Test8TestBodyEv called 0 returned 0% blocks executed 0%
+    #####:   40:  char expOutput[] = "abc - identifier\n123 - number\ndef";
+    #####:   41:  ASSERT_STREQ(expOutput, FMS(s));
+    #####:   42:}
+    #####:   43:
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+        -:   44:TEST(FMSTest, NoOutput) {
+------------------
+        -:   45:  char s[] = "   ";
+    #####:   46:  char expOutput[] = "";
+    #####:   47:  ASSERT_STREQ(expOutput, FMS(s));
+    #####:   48:}
+    #####:   49:
+        -:   50:TEST(FMSfTest, NoOutput) {
+------------------
+_ZN26FMSTest_BoundaryInput_TestC2Ev:
+function _ZN26FMSTest_BoundaryInput_TestC2Ev called 0 returned 0% blocks executed 0%
+    #####:   46:  char expOutput[] = "";
+call    0 never executed
+------------------
+_ZN26FMSTest_BoundaryInput_TestD0Ev:
+function _ZN26FMSTest_BoundaryInput_TestD0Ev called 0 returned 0% blocks executed 0%
+    #####:   46:  char expOutput[] = "";
+call    0 never executed
+call    1 never executed
+------------------
+_ZN26FMSTest_BoundaryInput_TestD2Ev:
+function _ZN26FMSTest_BoundaryInput_TestD2Ev called 0 returned 0% blocks executed 0%
+    #####:   46:  char expOutput[] = "";
+call    0 never executed
+------------------
+_ZN26FMSTest_BoundaryInput_Test8TestBodyEv:
+function _ZN26FMSTest_BoundaryInput_Test8TestBodyEv called 0 returned 0% blocks executed 0%
+    #####:   46:  char expOutput[] = "";
+    #####:   47:  ASSERT_STREQ(expOutput, FMS(s));
+    #####:   48:}
+    #####:   49:
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+        -:   50:TEST(FMSfTest, NoOutput) {
+------------------
+        -:   51:  char s[] = "abc # ty 45 dty";
+    #####:   52:  char expOutput[] = "abc - identifier\n";
+    #####:   53:  ASSERT_STREQ(expOutput, FMS(s));
+    #####:   54:}
+    #####:   55:
+        -:   56:TEST(FMSggTest, NoOuut) {
+------------------
+_ZN28FMSTest_OnlyIdentifiers_TestC2Ev:
+function _ZN28FMSTest_OnlyIdentifiers_TestC2Ev called 0 returned 0% blocks executed 0%
+    #####:   52:  char expOutput[] = "abc - identifier\n";
+call    0 never executed
+------------------
+_ZN28FMSTest_OnlyIdentifiers_TestD0Ev:
+function _ZN28FMSTest_OnlyIdentifiers_TestD0Ev called 0 returned 0% blocks executed 0%
+    #####:   52:  char expOutput[] = "abc - identifier\n";
+call    0 never executed
+call    1 never executed
+------------------
+_ZN28FMSTest_OnlyIdentifiers_TestD2Ev:
+function _ZN28FMSTest_OnlyIdentifiers_TestD2Ev called 0 returned 0% blocks executed 0%
+    #####:   52:  char expOutput[] = "abc - identifier\n";
+call    0 never executed
+------------------
+_ZN28FMSTest_OnlyIdentifiers_Test8TestBodyEv:
+function _ZN28FMSTest_OnlyIdentifiers_Test8TestBodyEv called 0 returned 0% blocks executed 0%
+    #####:   52:  char expOutput[] = "abc - identifier\n";
+    #####:   53:  ASSERT_STREQ(expOutput, FMS(s));
+    #####:   54:}
+    #####:   55:
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+        -:   56:TEST(FMSggTest, NoOuut) {
+------------------
+        -:   57:  char s[] = "#";
+        -:   58:  char expOutput[] = "";
+function main called 0 returned 0% blocks executed 0%
+    #####:   59:  ASSERT_STREQ(expOutput, FMS(s));
+    #####:   60:}
+call    0 never executed
+    #####:   61:
+call    0 never executed
+        -:   62:TEST(FMSTeshht, Ntput) {
+        -:   63:  char s[] = "_";
+        -:   64:  char expOutput[] = "_";
+        -:   65:  ASSERT_STREQ(expOutput, FMS(s));
+        -:   66:}
+        -:   67:
+        -:   68:TEST(FMSTeshht, Ntoooput) {
+        -:   69:  char s[] = "0";
+        -:   70:  char expOutput[] = "0";
+        -:   71:  ASSERT_STREQ(expOutput, FMS(s));
+        -:   72:}
+        -:   73:
+        -:   74:TEST(FMSTeshht, Ntouuooput) {
+        -:   75:  char s[] = "abc 123 # xyz";
+        -:   76:  char expOutput[] = "abc - identifier\n123 - number\n";
+        -:   77:  ASSERT_STREQ(expOutput, FMS(s));
+        -:   78:}
+        -:   79:
+        -:   80:TEST(FMSTeshht, put) {
+        -:   81:  char s[] = "abc123 def456";
+        -:   82:  char expOutput[] = "abc123 - identifier\ndef456";
+        -:   83:  ASSERT_STREQ(expOutput, FMS(s));
+        -:   84:}
+        -:   85:
+        -:   86:TEST(FMSTeshht, Ntooot) {
+        -:   87:  char s[] = "###";
+        -:   88:  char expOutput[] = "";
+        -:   89:  ASSERT_STREQ(expOutput, FMS(s));
+        -:   90:}
+        -:   91:
+        -:   92:TEST(FMSTeshht, Ntoot) {
+        -:   93:  char s[] = "!@#$%^&*()";
+        -:   94:  char expOutput[] = "!";
+        -:   95:  ASSERT_STREQ(expOutput, FMS(s));
+        -:   96:}
+        -:   97:
+        -:   98:TEST(FMSTest, Ntoppot) {
+        -:   99:  char s[] = "abc #";
+        -:  100:  char expOutput[] = "abc - identifier\n";
+        -:  101:  ASSERT_STREQ(expOutput, FMS(s));
+        -:  102:}
+        -:  103:
+        -:  104:TEST(FMSTest, MultipleNumbersIdentifiersInputString) {
+        -:  105:  char s[] = "123 abc 456 def";
+        -:  106:  char expOutput[] = "123 - number\nabc - identifier\n456 - number\ndef";
+        -:  107:  ASSERT_STREQ(expOutput, FMS(s));
+        -:  108:}
+        -:  109:
+        -:  110:// 定義 main 函式
+        -:  111:int main(int argc, char **argv) {
+        -:  112:  testing::InitGoogleTest(&argc, argv);
+        -:  113:  return RUN_ALL_TESTS();
+        -:  114:}
