@@ -110,3 +110,202 @@ K個壘包。本壘到一壘，接著二、三壘，最後回到本壘。回到�
 1 3 9
 
 */
+
+#include <stdio.h>
+
+#define MAX_AT_BATS 5
+#define PLAYER_NUM 9
+#define STATE 7
+
+void findTopThreeIndices(int arr[], int size, int indices[]);
+
+int main() {
+  char player[PLAYER_NUM][MAX_AT_BATS] = {0};
+  int player_n[PLAYER_NUM] = {0}; // 每個plater揮打次數
+  for (int i = 0; i < PLAYER_NUM; i++) {
+    int n = 0; // 每個plater揮打次數
+    scanf("%d", &n);
+    player_n[i] = n;
+    getchar(); // 空白鍵
+
+    for (int j = 0; j < n; j++) {
+      scanf("%c", &player[i][j]);
+      getchar(); // 空白鍵(非最後一次)或換行(最後一次)
+    }
+  }
+
+  int out_stop; // 累計出局數的中止條件
+  scanf("%d", &out_stop);
+  int out_sum = 0; // 紀錄目前總出局數
+  int out = 0;     // 紀錄出局數(達三場則歸零)
+  int i = 0, j = 0;
+  int score = 0;
+  int player_bits[PLAYER_NUM] = {0}; // 每位打者的安打數
+  int state[STATE] = {0};            // 壘包狀態
+  int player_state[STATE] = {0};
+  int player_runs[PLAYER_NUM] = {0}; // 每位打者的跑壘次數
+
+  while (1) {
+    if (out_sum == out_stop) {
+      break;
+    }
+
+    // printf("i: %d, j=%d, current: %c\n", i, j, player[i][j]);
+
+    if (player[i][j] == 'H') { // 全壘打
+      player_bits[i] += 1;
+      for (int m = 0; m < 4; m++) { // 一次右移一格，共右移四次
+        for (int k = STATE; k > 0; k--) {
+          state[k] = state[k - 1];
+          player_state[k] = player_state[k - 1];
+          if (player_state[k] != 0 && k <= 3)
+            player_runs[player_state[k] - 1] += 1;
+          player_state[3] = 0;
+          player_state[4] = 0;
+          player_state[5] = 0;
+          player_state[6] = 0;
+        }
+        state[0] = 0; // 補0
+        player_state[0] = 0;
+      }
+      state[3] = 1; // 打者上壘
+      player_state[3] = i + 1;
+      player_runs[i] += 4; // 安打該選手跑壘數更新
+
+    } else if (player[i][j] == 'O') { // 出局
+      out++;
+      out_sum++;
+      // printf("out_sum: %d\n", out_sum);
+      // printf("out: %d\n", out);
+      if (out == 3) {
+        for (int k = 0; k < STATE; k++) {
+          state[k] = 0;
+          player_state[k] = 0;
+        }
+        out = 0;
+      }
+
+    } else {
+      player_bits[i] += 1; // 安打1~3
+      for (int m = 0; m < (int)player[i][j] - 48;
+           m++) { // 一次右移一格，共右移四次
+        for (int k = STATE; k > 0; k--) {
+          state[k] = state[k - 1];
+          player_state[k] = player_state[k - 1];
+          if (player_state[k] != 0 && k <= 3)
+            player_runs[player_state[k] - 1] += 1;
+          player_state[3] = 0;
+          player_state[4] = 0;
+          player_state[5] = 0;
+          player_state[6] = 0;
+        }
+        state[0] = 0; // 補0
+        player_state[0] = 0;
+      }
+      state[(int)player[i][j] - 48 - 1] = 1; // 打者上壘
+      player_state[player[i][j] - 48 - 1] = i + 1;
+      player_runs[i] += player[i][j] - 48; // 安打該選手跑壘數更新
+    }
+
+    // check
+    /*
+    for (int y = 0; y < STATE; y++) {
+      printf("%d ", state[y]);
+    }
+    printf("\n");
+    */
+
+    /*
+    for (int y = 0; y < STATE; y++) {
+      printf("%d ", player_state[y]);
+    }
+    printf("\n");
+    */
+
+    // 加分，並清空
+    for (int y = 3; y <= 6; y++) {
+      if (state[y] == 1) {
+        score++;
+        // printf("score_curr: %d\n", score);
+        state[y] = 0;
+      }
+    }
+
+    i++;          // 換下一位選手
+    if (i == 9) { // 一輪結束(九位選手都打完)，開啟新的一輪
+      j++;
+      i = 0; // 從第一位選手開始
+    }
+  }
+
+  printf("%d\n", score);
+  // 驗證各選手安打數
+  /*
+    for (int i = 0; i < PLAYER_NUM; i++) {
+      printf("player: %d, bits: %d, runs: %d\n", i + 1, player_bits[i],
+             player_runs[i]);
+    }
+  */
+
+  int index[3] = {0}; // 前三個跑壘數最多者
+  findTopThreeIndices(player_runs, PLAYER_NUM, index);
+  // printf("%d %d %d\n", index[0], index[1], index[2]);
+
+  for (int i = 0; i < 3; i++) {
+    printf("%d %d %d\n", index[i] + 1, player_bits[index[i]],
+           player_runs[index[i]]);
+  }
+
+  // 驗證輸入
+  /*
+  for (int i = 0; i < 9; i++) {
+    for (int j = 0; j < 5; j++) {
+        printf("%c ", player[i][j]);
+    }
+    printf("\n");
+  }
+  */
+
+  return 0;
+}
+
+void findTopThreeIndices(int arr[], int size, int indices[]) {
+  int max1 = arr[0], max2 = 0, max3 = 0;
+  int idx1 = 0, idx2 = 0, idx3 = 0;
+
+  for (int i = 1; i < size; ++i) {
+    // printf("arr[i]=%d, i=%d, max1:%d, max2:%d, max3:%d, idx1:%d, idx:%d,
+    // idx:%d\n",arr[i], i, max1, max2, max3, idx1, idx2, idx3);
+    if (arr[i] > max1) {
+      max3 = max2;
+      idx3 = idx2;
+      max2 = max1;
+      idx2 = idx1;
+      max1 = arr[i];
+      idx1 = i;
+      // printf("%d 111\n", i);
+    }
+    if (arr[i] <= max1 && arr[i] >= max2 &&
+        i != idx1) { // 不重复且大于等于第二大值
+      if (arr[i] != max2 || i < idx2) {
+        max3 = max2;
+        idx3 = idx2;
+        max2 = arr[i];
+        idx2 = i;
+        // printf("%d 222\n", i);
+      }
+    }
+    if (arr[i] <= max2 && arr[i] >= max3 && i != idx1 &&
+        i != idx2) { // 不重复且大于等于第三大值
+      if (arr[i] != max3 || i < idx3) {
+        max3 = arr[i];
+        idx3 = i;
+        // printf("%d 333\n", i);
+      }
+    }
+  }
+
+  indices[0] = idx1;
+  indices[1] = idx2;
+  indices[2] = idx3;
+}
