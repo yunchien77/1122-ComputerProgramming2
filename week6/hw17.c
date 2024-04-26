@@ -269,3 +269,109 @@ all white
 7,7
 
 */
+
+#include <math.h>
+#include <stdio.h>
+#include <string.h>
+
+// Function to parse the DF-expression and update the coordinates of black cells
+void parseExpression(char *S, int startRow, int startCol, int size, int *x,
+                     int *y, int *index, int *count) {
+  // printf("current: %c\n", S[*index]);
+  // printf("startrow: %d, startcol: %d, size: %d, index: %d\n", startRow,
+  // startCol, size, *index);
+  if (*index >= strlen(S)) {
+    return; // If we reached the end of the expression, return
+  }
+  if (S[*index] == '0') {
+    // All white, do nothing
+    (*index)++;
+  } else if (S[*index] == '1') {
+    // All black, mark all cells in this block as black
+    if (size == 2) {
+      x[*count] = startRow;
+      y[*count] = startCol;
+      (*count)++;
+      x[*count] = startRow;
+      y[*count] = startCol + 1;
+      (*count)++;
+      x[*count] = startRow + 1;
+      y[*count] = startCol;
+      (*count)++;
+      x[*count] = startRow + 1;
+      y[*count] = startCol + 1;
+      (*count)++;
+    } else {
+      // Otherwise, store only one coordinate
+      x[*count] = startRow;
+      y[*count] = startCol;
+      (*count)++;
+    }
+    (*index)++;
+  } else { // 2
+    // Not all white or all black, divide into four quadrants
+    int newSize = size / 2;
+    (*index)++;
+    parseExpression(S, startRow, startCol, newSize, x, y, index,
+                    count); // Top left
+    parseExpression(S, startRow, startCol + newSize, newSize, x, y, index,
+                    count); // Top right
+    parseExpression(S, startRow + newSize, startCol, newSize, x, y, index,
+                    count); // Bottom left
+    parseExpression(S, startRow + newSize, startCol + newSize, newSize, x, y,
+                    index, count); // Bottom right
+  }
+}
+
+void sort(int x[], int y[], int count) {
+  // Bubble sort for sorting x array elements
+  for (int i = 0; i < count - 1; i++) {
+    for (int j = 0; j < count - i - 1; j++) {
+      if (x[j] > x[j + 1]) {
+        // Swap elements if they are in the wrong order
+        int temp = x[j];
+        int temp1 = y[j];
+        x[j] = x[j + 1];
+        y[j] = y[j + 1];
+        x[j + 1] = temp;
+        y[j + 1] = temp1;
+      }
+    }
+  }
+}
+
+int main() {
+  char S[101];   // DF-expression
+  int N;         // Width of the image
+  int size;      // Size of the image
+  int x[100];    // X coordinates of black cells
+  int y[100];    // Y coordinates of black cells
+  int count = 0; // count of saving coordinates
+
+  // Input
+  scanf("%s", S);
+  scanf("%d", &N);
+
+  // Initialize string index
+  int index = 0;
+
+  // Output
+  if (strlen(S) == 1 && S[0] == '0') {
+    printf("all white\n");
+  } else if (strlen(S) == 1 && S[0] == '1') {
+    for (int i = 0; i < N; i++) {
+      for (int j = 0; j < N; j++) {
+        printf("%d,%d\n", i, j);
+      }
+    }
+  } else {
+    // Parse the expression
+    parseExpression(S, 0, 0, N, x, y, &index, &count);
+    sort(x, y, count);
+    for (int i = 0; i < count; i++) {
+      printf("%d,%d\n", x[i], y[i]);
+    }
+  }
+
+  return 0;
+}
