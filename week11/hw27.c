@@ -163,3 +163,109 @@ O11。
 23
 
 */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct {
+  int machine;
+  int time;
+} Operation;
+
+typedef struct {
+  int num_operations;
+  Operation *operations;
+  int current_operation;
+  int completion_time;
+} Job;
+
+typedef struct {
+  int available_time;
+} Machine;
+
+int main() {
+  int N, M;
+  scanf("%d %d", &N, &M);
+
+  Job jobs[M];
+  Machine machines[N];
+
+  for (int i = 0; i < N; i++) {
+    machines[i].available_time = 0;
+  }
+
+  for (int i = 0; i < M; i++) {
+    scanf("%d", &jobs[i].num_operations);
+    jobs[i].operations =
+        (Operation *)malloc(jobs[i].num_operations * sizeof(Operation));
+    jobs[i].current_operation = 0;
+    jobs[i].completion_time = 0;
+
+    for (int j = 0; j < jobs[i].num_operations; j++) {
+      scanf("%d %d", &jobs[i].operations[j].machine,
+            &jobs[i].operations[j].time);
+    }
+  }
+
+  int remaining_jobs = M;
+  while (remaining_jobs > 0) {
+    int min_completion_time = -1;
+    int selected_job = -1;
+
+    for (int i = 0; i < M; i++) {
+      if (jobs[i].current_operation < jobs[i].num_operations) {
+        int current_op = jobs[i].current_operation;
+        int machine = jobs[i].operations[current_op].machine;
+        int time = jobs[i].operations[current_op].time;
+
+        int start_time = jobs[i].completion_time;
+        if (start_time < machines[machine].available_time) {
+          start_time = machines[machine].available_time;
+        }
+
+        int completion_time = start_time + time;
+
+        if (min_completion_time == -1 ||
+            completion_time < min_completion_time ||
+            (completion_time == min_completion_time && i < selected_job)) {
+          min_completion_time = completion_time;
+          selected_job = i;
+        }
+      }
+    }
+
+    if (selected_job != -1) {
+      int current_op = jobs[selected_job].current_operation;
+      int machine = jobs[selected_job].operations[current_op].machine;
+      int time = jobs[selected_job].operations[current_op].time;
+
+      int start_time = jobs[selected_job].completion_time;
+      if (start_time < machines[machine].available_time) {
+        start_time = machines[machine].available_time;
+      }
+
+      jobs[selected_job].completion_time = start_time + time;
+      machines[machine].available_time = start_time + time;
+
+      jobs[selected_job].current_operation++;
+
+      if (jobs[selected_job].current_operation ==
+          jobs[selected_job].num_operations) {
+        remaining_jobs--;
+      }
+    }
+  }
+
+  int total_completion_time = 0;
+  for (int i = 0; i < M; i++) {
+    total_completion_time += jobs[i].completion_time;
+  }
+
+  printf("%d\n", total_completion_time);
+
+  for (int i = 0; i < M; i++) {
+    free(jobs[i].operations);
+  }
+
+  return 0;
+}

@@ -151,3 +151,103 @@ front
 18
 
 */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct node_s {
+  int data;
+  struct node_s *next;
+} node_t;
+
+typedef node_t *nodep_t;
+
+nodep_t front = NULL;
+nodep_t rear = NULL;
+
+void push(int data) {
+  nodep_t newNode = (nodep_t)malloc(sizeof(node_t));
+  newNode->data = data;
+  newNode->next = NULL;
+  if (rear == NULL) {
+    front = newNode;
+  } else {
+    rear->next = newNode;
+  }
+  rear = newNode;
+}
+
+void pop() {
+  if (front == NULL) {
+    printf("Queue is empty\n");
+  } else {
+    nodep_t temp = front;
+    printf("%d\n", front->data);
+    front = front->next;
+    if (front == NULL) {
+      rear = NULL;
+    }
+    free(temp);
+  }
+}
+
+void front_op() {
+  if (front == NULL) {
+    printf("Queue is empty\n");
+  } else {
+    printf("%d\n", front->data);
+  }
+}
+
+void empty() {
+  if (front == NULL) {
+    printf("Queue is empty\n");
+  } else {
+    while (front != NULL) {
+      nodep_t temp = front;
+      front = front->next;
+      free(temp);
+    }
+    rear = NULL;
+  }
+}
+
+void print() {
+  if (front == NULL) {
+    printf("Queue is empty\n");
+  } else {
+    nodep_t current = front;
+    while (current != NULL) {
+      printf("%d\n", current->data);
+      current = current->next;
+    }
+  }
+}
+
+int main() {
+  int n;
+  scanf("%d", &n);
+  char command[10];
+  int value;
+
+  for (int i = 0; i < n; i++) {
+    scanf("%s", command);
+    if (strcmp(command, "push") == 0) {
+      scanf("%d", &value);
+      push(value);
+    } else if (strcmp(command, "pop") == 0) {
+      pop();
+    } else if (strcmp(command, "front") == 0) {
+      front_op();
+    } else if (strcmp(command, "empty") == 0) {
+      empty();
+    } else if (strcmp(command, "print") == 0) {
+      print();
+    }
+  }
+
+  // Clean up any remaining nodes in the queue
+  // empty();
+  return 0;
+}

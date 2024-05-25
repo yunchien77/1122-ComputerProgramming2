@@ -164,3 +164,93 @@ top
 62
 
 */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct node_s {
+  int data;
+  struct node_s *next;
+} node_t;
+
+typedef node_t *nodep_t;
+
+nodep_t stack = NULL;
+
+void push(int data) {
+  nodep_t newNode = (nodep_t)malloc(sizeof(node_t));
+  newNode->data = data;
+  newNode->next = stack;
+  stack = newNode;
+}
+
+void pop() {
+  if (stack == NULL) {
+    printf("Stack is empty\n");
+  } else {
+    nodep_t temp = stack;
+    printf("%d\n", stack->data);
+    stack = stack->next;
+    free(temp);
+  }
+}
+
+void top() {
+  if (stack == NULL) {
+    printf("Stack is empty\n");
+  } else {
+    printf("%d\n", stack->data);
+  }
+}
+
+void empty() {
+  if (stack == NULL) {
+    printf("Stack is empty\n");
+  } else {
+    while (stack != NULL) {
+      nodep_t temp = stack;
+      stack = stack->next;
+      free(temp);
+    }
+  }
+}
+
+void print() {
+  if (stack == NULL) {
+    printf("Stack is empty\n");
+  } else {
+    nodep_t current = stack;
+    while (current != NULL) {
+      printf("%d\n", current->data);
+      current = current->next;
+    }
+  }
+}
+
+int main() {
+  int n;
+  scanf("%d", &n);
+  char command[10];
+  int value;
+
+  for (int i = 0; i < n; i++) {
+    scanf("%s", command);
+    if (strcmp(command, "push") == 0) {
+      scanf("%d", &value);
+      push(value);
+    } else if (strcmp(command, "pop") == 0) {
+      pop();
+    } else if (strcmp(command, "top") == 0) {
+      top();
+    } else if (strcmp(command, "empty") == 0) {
+      empty();
+    } else if (strcmp(command, "print") == 0) {
+      print();
+    }
+  }
+
+  // Clean up any remaining nodes in the stack
+  // empty();
+  return 0;
+}

@@ -301,3 +301,85 @@
 26
 
 */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+
+typedef struct task_s {
+  int day;        // Days required to complete the task
+  int pNo;        // Number of preceding tasks
+  int pTask[100]; // List of preceding tasks
+  int tDay;       // Earliest completion time
+} task_t;
+
+void input(int n, task_t data[]) {
+  for (int i = 0; i < n; i++) {
+    scanf("%d %d", &data[i].day, &data[i].pNo);
+    for (int j = 0; j < data[i].pNo; j++) {
+      scanf("%d", &data[i].pTask[j]);
+      data[i].pTask[j]--; // Adjust to zero-based index
+    }
+    data[i].tDay = -1; // Initially set the completion time to -1
+  }
+}
+
+int isCanCompute(task_t tasks[], task_t t) {
+  for (int i = 0; i < t.pNo; i++) {
+    if (tasks[t.pTask[i]].tDay == -1) {
+      return 0; // If any of the preceding tasks is not computed, return false
+    }
+  }
+  return 1;
+}
+
+int computeDay(task_t tasks[], task_t t) {
+  int maxDay = 0;
+  for (int i = 0; i < t.pNo; i++) {
+    if (tasks[t.pTask[i]].tDay > maxDay) {
+      maxDay = tasks[t.pTask[i]].tDay;
+    }
+  }
+  return maxDay + t.day;
+}
+
+void computeAllDays(int n, task_t tasks[]) {
+  int count = 0;
+  while (count < n) {
+    for (int i = 0; i < n; i++) {
+      if (tasks[i].tDay == -1 && isCanCompute(tasks, tasks[i])) {
+        tasks[i].tDay = computeDay(tasks, tasks[i]);
+        count++;
+      }
+    }
+  }
+}
+
+int getMaxDay(int n, task_t tasks[]) {
+  int maxDay = 0;
+  for (int i = 0; i < n; i++) {
+    if (tasks[i].tDay > maxDay) {
+      maxDay = tasks[i].tDay;
+    }
+  }
+  return maxDay;
+}
+
+void processProject() {
+  int m;
+  scanf("%d", &m);
+  task_t tasks[100];
+  input(m, tasks);
+  computeAllDays(m, tasks);
+  printf("%d\n", getMaxDay(m, tasks));
+}
+
+int main() {
+  int n;
+  scanf("%d", &n);
+  for (int i = 0; i < n; i++) {
+    processProject();
+  }
+  return 0;
+}

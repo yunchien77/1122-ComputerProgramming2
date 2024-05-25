@@ -126,3 +126,225 @@ x^3+x^2-x-1
 x^4+2x^3+x^2
 
 */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_LINE_LENGTH 1024
+
+// 定義多項式節點結構
+typedef struct PolyNode {
+  int coef; // 係數
+  int exp;  // 次方
+  struct PolyNode *next;
+} PolyNode;
+
+// 創建新節點
+PolyNode *createNode(int coef, int exp) {
+  PolyNode *newNode = (PolyNode *)malloc(sizeof(PolyNode));
+  newNode->coef = coef;
+  newNode->exp = exp;
+  newNode->next = NULL;
+  return newNode;
+}
+
+// 插入節點到鏈結串列（依次方遞減順序）
+PolyNode *insertNode(PolyNode *head, int coef, int exp) {
+  if (coef == 0)
+    return head; // 不插入係數為0的項
+  PolyNode *newNode = createNode(coef, exp);
+  if (!head || head->exp < exp) {
+    newNode->next = head;
+    return newNode;
+  }
+  PolyNode *current = head;
+  while (current->next && current->next->exp > exp) {
+    current = current->next;
+  }
+  if (current->exp == exp) {
+    current->coef += coef;
+    if (current->coef == 0) {
+      PolyNode *temp = current->next;
+      current->next = current->next->next;
+      free(temp);
+    }
+    free(newNode);
+  } else {
+    newNode->next = current->next;
+    current->next = newNode;
+  }
+  return head;
+}
+
+// 讀取多項式
+PolyNode *readPolynomial() {
+  char line[MAX_LINE_LENGTH];
+  fgets(line, MAX_LINE_LENGTH, stdin);
+
+  PolyNode *poly = NULL;
+  int coef;
+  int exp = 0;
+  int termCount = 0;
+
+  // 首先复制输入行以便多次解析
+  char lineCopy[MAX_LINE_LENGTH];
+  strcpy(lineCopy, line);
+
+  // 計算多項式項數
+  for (char *token = strtok(line, " "); token != NULL;
+       token = strtok(NULL, " ")) {
+    termCount++;
+  }
+
+  // 再次解析多項式，並插入節點
+  exp = termCount - 1;
+  for (char *token = strtok(lineCopy, " "); token != NULL;
+       token = strtok(NULL, " ")) {
+    coef = atoi(token);
+    poly = insertNode(poly, coef, exp);
+    exp--;
+  }
+
+  return poly;
+}
+
+// 打印多項式
+void printPolynomial(PolyNode *poly) {
+  int first = 1;
+  while (poly) {
+    if (poly->coef) {
+      if (!first && poly->coef > 0)
+        printf("+");
+      if (poly->coef == -1 && poly->exp != 0)
+        printf("-");
+      if (abs(poly->coef) != 1 || poly->exp == 0)
+        printf("%d", poly->coef);
+      if (poly->exp > 1)
+        printf("x^%d", poly->exp);
+      if (poly->exp == 1)
+        printf("x");
+      first = 0;
+    }
+    poly = poly->next;
+  }
+  if (first)
+    printf("0");
+  printf("\n");
+}
+
+// 多項式相加
+PolyNode *addPolynomials(PolyNode *poly1, PolyNode *poly2) {
+  PolyNode *result = NULL;
+  while (poly1 || poly2) {
+    int coef = 0, exp = 0;
+    if (poly1 && (!poly2 || poly1->exp > poly2->exp)) {
+      coef = poly1->coef;
+      exp = poly1->exp;
+      poly1 = poly1->next;
+    } else if (poly2 && (!poly1 || poly2->exp > poly1->exp)) {
+      coef = poly2->coef;
+      exp = poly2->exp;
+      poly2 = poly2->next;
+    } else {
+      coef = poly1->coef + poly2->coef;
+      exp = poly1->exp;
+      poly1 = poly1->next;
+      poly2 = poly2->next;
+    }
+    result = insertNode(result, coef, exp);
+  }
+  return result;
+}
+
+// 多項式相減
+PolyNode *subtractPolynomials(PolyNode *poly1, PolyNode *poly2) {
+  PolyNode *result = NULL;
+  while (poly1 || poly2) {
+    int coef = 0, exp = 0;
+    if (poly1 && (!poly2 || poly1->exp > poly2->exp)) {
+      coef = poly1->coef;
+      exp = poly1->exp;
+      poly1 = poly1->next;
+    } else if (poly2 && (!poly1 || poly2->exp > poly1->exp)) {
+      coef = -poly2->coef;
+      exp = poly2->exp;
+      poly2 = poly2->next;
+    } else {
+      coef = poly1->coef - poly2->coef;
+      exp = poly1->exp;
+      poly1 = poly1->next;
+      poly2 = poly2->next;
+    }
+    result = insertNode(result, coef, exp);
+  }
+  return result;
+}
+
+// 多項式相乘
+PolyNode *multiplyPolynomials(PolyNode *poly1, PolyNode *poly2) {
+  PolyNode *result = NULL;
+  for (PolyNode *p1 = poly1; p1; p1 = p1->next) {
+    for (PolyNode *p2 = poly2; p2; p2 = p2->next) {
+      result = insertNode(result, p1->coef * p2->coef, p1->exp + p2->exp);
+    }
+  }
+
+  // 合併具有相同次方的節點
+  PolyNode *current = result;
+  while (current != NULL && current->next != NULL) {
+    if (current->exp == current->next->exp) {
+      current->coef += current->next->coef;
+      // 刪除重複的節點
+      PolyNode *temp = current->next;
+      current->next = current->next->next;
+      free(temp);
+    } else {
+      current = current->next;
+    }
+  }
+  return result;
+}
+
+// 清除多項式節點
+void clearPolynomial(PolyNode *poly) {
+  while (poly) {
+    PolyNode *temp = poly;
+    poly = poly->next;
+    free(temp);
+  }
+}
+
+void printList(PolyNode *head) {
+  while (head) {
+    printf("(%d, %d) -> ", head->coef, head->exp);
+    head = head->next;
+  }
+  printf("NULL\n");
+}
+
+int main() {
+  // 讀取兩個多項式
+  PolyNode *poly1 = readPolynomial();
+  // printList(poly1);
+  PolyNode *poly2 = readPolynomial();
+  // printList(poly2);
+
+  // 計算並打印結果
+  PolyNode *sum = addPolynomials(poly1, poly2);
+  PolyNode *diff = subtractPolynomials(poly1, poly2);
+  PolyNode *prod = multiplyPolynomials(poly1, poly2);
+
+  printPolynomial(sum);
+  printPolynomial(diff);
+  printPolynomial(prod);
+
+  // 釋放記憶體
+  clearPolynomial(poly1);
+  clearPolynomial(poly2);
+  clearPolynomial(sum);
+  clearPolynomial(diff);
+  clearPolynomial(prod);
+
+  return 0;
+}
